@@ -1,0 +1,83 @@
+---
+title: "A Statistical Analysis of the Holocaust Victims by Birthplace and Religion"
+author: 
+  - ABC
+thanks: "Code and data are available at: https://github.com/scottyuan6/shinny.git. App available at: "
+date: "30 March 2024"
+date-format: long
+abstract: "This article presents an analysis of the ethnic origins and number of Holocaust victims murdered at Auschwitz concentration camp during 1942-1943. By examining a dataset of death certificates, we identify the victims' birthplaces, residences, and religions, offering insights into the diverse backgrounds of those who perished."
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(readr)
+```
+
+
+# Introduction
+The Holocaust remains one of the darkest chapters in human history, with Auschwitz symbolizing its utmost brutality. Understanding the scale and diversity of the genocide is critical for remembrance and education. This study analyzes death certificates from Auschwitz, focusing on victims' ethnic origins and the magnitude of the tragedy.
+
+We use `R` [@citeR] and the following `R` packages: `knitr` [@knitr], `ggplot2` [@ggplot2], `dplyr` [@dplyr], `readr` [@readr].
+
+
+# Data
+The dataset comprises death certificates issued at Auschwitz between 1942 and 1943, detailing victims' names, birth and death dates, birthplaces, residences, and religions. This analysis utilizes the birthplace and religion data to infer ethnic origins, acknowledging the limitations and complexities of categorizing ethnicity.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Reading the data from a CSV file
+victims_data <- read.csv("/cloud/project/data/Auschwitz_Death.csv")
+```
+
+
+# Table and Graph
+To visually represent the dataset's insights, we will create a table and graphs showing the number of victims by nationality/category, based on their birthplaces and religions. This requires aggregating data by these characteristics and visualizing the results. 
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: "fig-1"
+#| fig-cap: Death Count by Birthplace from Auschwitz Death Certificates 1942-1943
+
+# Aggregate data by birthplace
+birthplace_counts <- table(victims_data$Birthplace)
+barplot(birthplace_counts, main="Victims by Birthplace", xlab="Birthplace", ylab="Number of Victims")
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: "fig-2"
+#| fig-cap: Death Count by Religion from Auschwitz Death Certificates 1942-1943
+
+# Aggregate data by religion
+religion_counts <- table(victims_data$Religion)
+barplot(religion_counts, main="Victims by Religion", xlab="Religion", ylab="Number of Victims")
+```
+@fig-1 and @fig-2 each show the number of deaths by birthplace and religion from Auschwitz between 1942 and 1943.
+
+
+# Discussion
+The analysis underscores the Holocaust's tragic scope and the specific focus on the Jewish population. By examining victims' birthplaces, we observe the widespread nature of the Nazi regime's reach and its systematic effort to exterminate Jews from numerous countries and regions. The religious data further corroborates historical accounts of the Holocaust's primary target, offering quantitative evidence of this genocide's horrifying scale.
+
+The limitations of our analysis include the potential underrepresentation of certain groups due to the dataset's scope (covering only a portion of the Holocaust period) and the inherent complexities in interpreting historical records. Nonetheless, our findings contribute to understanding the Holocaust's devastating impact, emphasizing the importance of remembering and learning from this dark period in history.
+
+In conclusion, the Auschwitz Death Certificates from 1942-1943 reveal a fraction of the Holocaust's horror, highlighting the diverse origins of its victims and the genocide's focused brutality towards the Jewish people. This analysis, while reflecting on a deeply somber subject, reinforces the need for continued education, remembrance, and vigilance against hatred and bigotry to prevent such atrocities in the future.
+
+
+# References
